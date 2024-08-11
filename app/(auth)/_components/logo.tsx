@@ -12,13 +12,11 @@ export const Logo = () => {
   return (
     <div className="flex flex-col items-center gap-y-4">
       <div className="bg-white rounded-full p-1">
-        <Image src="" alt="gamerhub" width="80" height="80" />
+        <Image src="/logo.svg" alt="gamerhub" width="80" height="80" />
       </div>
       <div className={cn("flex flex-col items-center", font.className)}>
-        <p className="text-xl font-semibold">Gamer Hub</p>
-        <p className="text-sm text-muted-foreground">
-          Stream Your Game, Everyday!
-        </p>
+        <p className="text-xl font-semibold text-primary">Gamer Hub</p>
+        <p className="text-sm text-white">Stream Your Game, Everyday!</p>
       </div>
     </div>
   );
