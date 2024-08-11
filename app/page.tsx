@@ -2,7 +2,7 @@
 const Home = () => {
   return (
     <div>
-      Home
+      <p>Only Authenticated Person should see this.</p>
     </div> 
   )
 }
