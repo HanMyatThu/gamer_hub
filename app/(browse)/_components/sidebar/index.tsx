@@ -1,6 +1,6 @@
 import { getRecommended } from "@/lib/recommended-service";
 import { Recommended, RecommendedSkeleton } from "./recommended";
-import { ToggleSidebar } from "./toggle-sidebar";
+import { ToggleSidebar, ToggleSidebarSkeleton } from "./toggle-sidebar";
 import { Wrapper } from "./wrapper";
 
 export const SideBar = async () => {
@@ -18,6 +18,7 @@ export const SideBar = async () => {
 export const SidebarSkeleton = () => {
   return (
     <aside className="fixed left-0 flex flex-col w-[70px] lg:w-60 h-full bg-[#18191f] border-r border-[#2D2E35] z-50 ">
+      <ToggleSidebarSkeleton />
       <RecommendedSkeleton />
     </aside>
   );

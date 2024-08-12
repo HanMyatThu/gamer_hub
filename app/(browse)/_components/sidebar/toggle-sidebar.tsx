@@ -5,6 +5,7 @@ import { ArrowLeftFromLine, ArrowRightFromLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ToolTipHint } from "@/components/common/tooltip-hint";
 import { useSidebar } from "@/store/use-sidebar";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const ToggleSidebar = () => {
   const { collapsed, onCollapse, onExpand } = useSidebar((state) => state);
@@ -43,5 +44,14 @@ export const ToggleSidebar = () => {
         </div>
       )}
     </>
+  );
+};
+
+export const ToggleSidebarSkeleton = () => {
+  return (
+    <div className="p-3 pl-6 mb-2 hidden lg:flex items-center justify-between w-full">
+      <Skeleton className="h-6 w-[100px]" />
+      <Skeleton className="h-6 w-6" />
+    </div>
   );
 };
