@@ -1,6 +1,7 @@
 import { isFollowingUser } from "@/lib/follwer-service";
 import { getUserByUserName } from "@/lib/user-service";
 import { notFound } from "next/navigation";
+import { Action } from "./_components/actions";
 
 interface UserPageProps {
   params: {
@@ -23,6 +24,7 @@ const UserPage = async ({ params }: UserPageProps) => {
       <p>{user.username}</p>
       <p>{user.id}</p>
       <p>Isfollowing {isFollowing ? "true" : "false"}</p>
+      <Action userId={user.id} isFollowing={isFollowing} />
     </div>
   );
 };
