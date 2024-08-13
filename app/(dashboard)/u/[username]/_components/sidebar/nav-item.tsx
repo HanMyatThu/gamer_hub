@@ -9,7 +9,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 interface NavItemProps {
   label: string;
-  key: string;
   href: string;
   icon: LucideIcon;
   isActive: boolean;
@@ -17,7 +16,6 @@ interface NavItemProps {
 
 export const NavItem = ({
   label,
-  key,
   href,
   icon: Icon,
   isActive,
