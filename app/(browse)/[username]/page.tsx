@@ -2,6 +2,7 @@ import { isFollowingUser } from "@/lib/follwer-service";
 import { getUserByUserName } from "@/lib/user-service";
 import { notFound } from "next/navigation";
 import { Action } from "./_components/actions";
+import { isBlockedByUser } from "@/lib/block-service";
 
 interface UserPageProps {
   params: {
