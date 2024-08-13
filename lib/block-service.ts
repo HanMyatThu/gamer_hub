@@ -20,8 +20,8 @@ export const isBlockedByUser = async (id: string) => {
     const block = await prisma.block.findUnique({
       where: {
         blockerId_blockedId: {
-          blockerId: user.id,
-          blockedId: self.id
+          blockerId: self.id,
+          blockedId: user.id
         }
       }
     })

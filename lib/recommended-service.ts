@@ -20,8 +20,8 @@ export const getRecommended = async () => {
             NOT: {
               id: userId
             },
-           },
-           {
+          },
+          {
             NOT: {
               followedBy: {
                 some: {
@@ -29,13 +29,24 @@ export const getRecommended = async () => {
                 }
               }
             }
+          },
+          {
+            NOT: {
+              blockedBy: {
+                some: {
+                  blockerId: userId
+                }
+              }
+            }
           }
          ]
-         
       },
       orderBy: {
         createdAt: 'desc'
-      },
+       },
+      include: {
+        blockedBy: true
+      }
     });
   } else {
      users = await prisma.user.findMany({
@@ -44,6 +55,5 @@ export const getRecommended = async () => {
       },
     });
   }
-
   return users;
 }

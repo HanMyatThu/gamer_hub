@@ -1,3 +1,4 @@
+import { blockUser } from './block-service';
 import prisma from "./db";
 import { getSelf } from "./auth-service";
 
@@ -114,13 +115,20 @@ export const getAllFollowedUser = async () => {
 
     const followedUsers = await prisma.follow.findMany({
       where: {
-        followerId: self.id
+        followerId: self.id,
+        following: {
+          blockedBy: {
+            none: {
+              blockerId: self.id,
+            }
+          }
+        }
       },
       include: {
-        following: true
+        following: true,
       },
     });
-
+    console.log(followedUsers,'hi')
     return followedUsers
   } catch (e) {
     return []

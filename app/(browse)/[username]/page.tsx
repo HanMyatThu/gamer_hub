@@ -18,6 +18,7 @@ const UserPage = async ({ params }: UserPageProps) => {
   }
 
   const isFollowing = await isFollowingUser(user.id);
+  const isBlocking = await isBlockedByUser(user.id);
 
   return (
     <div>
@@ -25,7 +26,12 @@ const UserPage = async ({ params }: UserPageProps) => {
       <p>{user.username}</p>
       <p>{user.id}</p>
       <p>Isfollowing {isFollowing ? "true" : "false"}</p>
-      <Action userId={user.id} isFollowing={isFollowing} />
+      <p>isBlocking {isBlocking ? "true" : "false"}</p>
+      <Action
+        userId={user.id}
+        isFollowing={isFollowing}
+        isBlocking={isBlocking}
+      />
     </div>
   );
 };
