@@ -45,14 +45,18 @@ export const getRecommended = async () => {
         createdAt: 'desc'
        },
       include: {
-        blockedBy: true
+        blockedBy: true,
+        Stream: true,
       }
     });
   } else {
      users = await prisma.user.findMany({
       orderBy: {
         createdAt: 'desc'
-      },
+       },
+       include: {
+         Stream: true,
+       }
     });
   }
   return users;

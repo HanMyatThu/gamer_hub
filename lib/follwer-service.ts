@@ -125,10 +125,13 @@ export const getAllFollowedUser = async () => {
         }
       },
       include: {
-        following: true,
+        following: {
+          include: {
+            Stream: true,
+          },
+        },
       },
     });
-    console.log(followedUsers,'hi')
     return followedUsers
   } catch (e) {
     return []
