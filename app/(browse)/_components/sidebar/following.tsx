@@ -5,7 +5,9 @@ import { Follow, Stream, User } from "@prisma/client";
 import { UserItem, UserItemSkeleton } from "./user-item";
 
 interface FollowingProps {
-  data: (Follow & { following: User & { Stream: Stream | null } })[];
+  data: (Follow & {
+    following: User & { Stream: { isLive: boolean } | null };
+  })[];
 }
 
 export const Following = ({ data }: FollowingProps) => {

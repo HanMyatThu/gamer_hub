@@ -55,7 +55,11 @@ export const getRecommended = async () => {
         createdAt: 'desc'
        },
        include: {
-         Stream: true,
+         Stream: {
+           select: {
+             isLive: true
+           }
+         },
        }
     });
   }
