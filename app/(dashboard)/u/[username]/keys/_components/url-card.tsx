@@ -13,7 +13,7 @@ export const UrlCard = ({ value }: UrlCardProps) => {
         <div className="space-y-2 w-full">
           <div className="w-full flex items-center gap-x-2">
             <Input value={value || ""} disabled placeholder="Server URL" />
-            <CopyButton value={"123"} label="URL is copied!" />
+            <CopyButton value={value} label="URL is copied!" />
           </div>
         </div>
       </div>

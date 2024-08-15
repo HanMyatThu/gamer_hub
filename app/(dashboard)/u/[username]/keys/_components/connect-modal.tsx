@@ -1,7 +1,10 @@
 "use client";
-
+import { ElementRef, useRef, useState, useTransition } from "react";
 import { AlertTriangle } from "lucide-react";
+import { IngressInput } from "livekit-server-sdk";
+import { toast } from "sonner";
 
+import { createIngress } from "@/actions/ingress";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,7 +23,27 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+const RTMP = String(IngressInput.RTMP_INPUT);
+const WHIP = String(IngressInput.WHIP_INPUT);
+
+type ingressType = typeof RTMP | typeof WHIP;
+
 export const ConnectModal = () => {
+  const closeRef = useRef<ElementRef<"button">>(null);
+  const [pending, startTransition] = useTransition();
+  const [ingressType, setIngressType] = useState<ingressType>(RTMP);
+
+  const onSubmit = () => {
+    startTransition(() => {
+      createIngress(parseInt(ingressType))
+        .then((data) => {
+          toast("Ingress Created");
+          closeRef.current?.click();
+        })
+        .catch(() => toast.error("Something went wrong"));
+    });
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -30,13 +53,17 @@ export const ConnectModal = () => {
         <DialogHeader className="text-center">
           <DialogTitle>Generate Connections</DialogTitle>
         </DialogHeader>
-        <Select>
+        <Select
+          disabled={pending}
+          value={ingressType}
+          onValueChange={(value) => setIngressType(value)}
+        >
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Ingress Type" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="RTMP">RTMP</SelectItem>
-            <SelectItem value="WHIP">WHIP</SelectItem>
+            <SelectItem value={RTMP}>RTMP</SelectItem>
+            <SelectItem value={WHIP}>WHIP</SelectItem>
           </SelectContent>
         </Select>
         <Alert>
@@ -48,10 +75,10 @@ export const ConnectModal = () => {
           </AlertDescription>
         </Alert>
         <div className="flex justify-between">
-          <DialogClose>
+          <DialogClose ref={closeRef} asChild>
             <Button variant="ghost">Cancel</Button>
           </DialogClose>
-          <Button onClick={() => {}} variant="primary">
+          <Button onClick={onSubmit} disabled={pending} variant="primary">
             Generate
           </Button>
         </div>
