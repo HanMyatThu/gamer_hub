@@ -11,6 +11,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { ChatHeader } from "./chat-header";
 import { ChatForm } from "./chat-form";
+import { ChatLists } from "./chat-lists";
 
 interface ChatProps {
   viewerName: string;
@@ -40,7 +41,7 @@ export const Chat = ({
   const isOnline = participant && connectionState === ConnectionState.Connected;
 
   const isHidden = !isChatEnabled || !isOnline;
-  const isChat = variant === ChatVariant.CHAT;
+  const isChat = variant === ChatVariant.CHAT && isOnline;
 
   const [value, setValue] = useState("");
   const { chatMessages: messages, send } = useChat();
@@ -71,6 +72,7 @@ export const Chat = ({
       <ChatHeader />
       {isChat && (
         <>
+          <ChatLists messages={sortedMessages} isHidden={isHidden} />
           <ChatForm
             onSubmit={onSubmit}
             value={value}
