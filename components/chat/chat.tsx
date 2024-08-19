@@ -1,6 +1,6 @@
 "use client";
 
-import { useChatSidebar } from "@/store/usechat-sidebar";
+import { ChatVariant, useChatSidebar } from "@/store/usechat-sidebar";
 import {
   useChat,
   useConnectionState,
@@ -10,6 +10,7 @@ import { ConnectionState } from "livekit-client";
 import { useEffect, useMemo, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { ChatHeader } from "./chat-header";
+import { ChatForm } from "./chat-form";
 
 interface ChatProps {
   viewerName: string;
@@ -39,6 +40,7 @@ export const Chat = ({
   const isOnline = participant && connectionState === ConnectionState.Connected;
 
   const isHidden = !isChatEnabled || !isOnline;
+  const isChat = variant === ChatVariant.CHAT;
 
   const [value, setValue] = useState("");
   const { chatMessages: messages, send } = useChat();
@@ -67,6 +69,24 @@ export const Chat = ({
   return (
     <div className="flex flex-col bg-[#18191f] border-l border-b pt-0 h-[calc(100vh-80px)]">
       <ChatHeader />
+      {isChat && (
+        <>
+          <ChatForm
+            onSubmit={onSubmit}
+            value={value}
+            onChange={onChange}
+            isHidden={isHidden}
+            isFollowersOnly={isChatFollowersOnly}
+            isDelayed={isChatDelayed}
+            isFollowing={isFollowing}
+          />
+        </>
+      )}
+      {variant === ChatVariant.COMMUNITY && (
+        <>
+          <p>Community</p>
+        </>
+      )}
     </div>
   );
 };
