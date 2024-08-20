@@ -70,9 +70,9 @@ export const Chat = ({
   return (
     <div className="flex flex-col bg-[#18191f] border-l border-b pt-0 h-[calc(100vh-80px)]">
       <ChatHeader />
-      {isChat && (
-        <>
-          <ChatLists messages={sortedMessages} isHidden={isHidden} />
+      <>
+        <ChatLists messages={sortedMessages} isHidden={isHidden} />
+        {isChat && (
           <ChatForm
             onSubmit={onSubmit}
             value={value}
@@ -82,8 +82,8 @@ export const Chat = ({
             isDelayed={isChatDelayed}
             isFollowing={isFollowing}
           />
-        </>
-      )}
+        )}
+      </>
       {variant === ChatVariant.COMMUNITY && (
         <>
           <p>Community</p>
