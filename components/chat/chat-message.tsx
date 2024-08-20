@@ -1,7 +1,9 @@
 "use client";
 import { ReceivedChatMessage } from "@livekit/components-react";
 import { format } from "date-fns";
+
 import { stringToColor } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface ChatMessageProps {
   data: ReceivedChatMessage;
@@ -21,6 +23,14 @@ export const ChatMessage = ({ data }: ChatMessageProps) => {
         </p>
         <p className="text-sm break-all">{data.message}</p>
       </div>
+    </div>
+  );
+};
+
+export const ChatSkeleton = () => {
+  return (
+    <div className="flex h-full items-center justify-center">
+      <Skeleton className="w-1/2 h-6" />
     </div>
   );
 };
