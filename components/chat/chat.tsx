@@ -9,9 +9,10 @@ import {
 import { ConnectionState } from "livekit-client";
 import { useEffect, useMemo, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
-import { ChatHeader } from "./chat-header";
-import { ChatForm } from "./chat-form";
-import { ChatLists } from "./chat-lists";
+import { ChatHeader, ChatHeaderSkeleton } from "./chat-header";
+import { ChatForm, ChatFormSkeleton } from "./chat-form";
+import { ChatLists, ChatListSkeleton } from "./chat-lists";
+import { Community } from "@/components/community";
 
 interface ChatProps {
   viewerName: string;
@@ -70,9 +71,9 @@ export const Chat = ({
   return (
     <div className="flex flex-col bg-[#18191f] border-l border-b pt-0 h-[calc(100vh-80px)]">
       <ChatHeader />
-      <>
-        <ChatLists messages={sortedMessages} isHidden={isHidden} />
-        {isChat && (
+      {isChat && (
+        <>
+          <ChatLists messages={sortedMessages} isHidden={isHidden} />
           <ChatForm
             onSubmit={onSubmit}
             value={value}
@@ -82,13 +83,25 @@ export const Chat = ({
             isDelayed={isChatDelayed}
             isFollowing={isFollowing}
           />
-        )}
-      </>
-      {variant === ChatVariant.COMMUNITY && (
-        <>
-          <p>Community</p>
         </>
       )}
+      {variant === ChatVariant.COMMUNITY && (
+        <Community
+          viewerName={viewerName}
+          hostName={hostName}
+          isHidden={isHidden}
+        />
+      )}
+    </div>
+  );
+};
+
+export const ChatSkeleton = () => {
+  return (
+    <div className="flex flex-col border-l border-b pt-0 h-[calc(100vh-80px)] border-2">
+      <ChatHeaderSkeleton />
+      <ChatListSkeleton />
+      <ChatFormSkeleton />
     </div>
   );
 };
