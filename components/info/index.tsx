@@ -22,7 +22,7 @@ export const InfoCard = ({
   const hostAsViwer = `host-${hostIdentity}`;
   const isHost = viewerIdentity === hostAsViwer;
 
-  if (isHost) return null;
+  if (!isHost) return null;
 
   return (
     <div className="px-4">
