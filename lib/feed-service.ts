@@ -26,15 +26,31 @@ export const getStreams = async () => {
           }
         }
       },
-      include: {
-        user: true
+      select: {
+        id: true,
+        user: true,
+        isLive: true,
+        name: true,
+        thumbnailUrl: true,
       },
+      orderBy: [
+        {
+          isLive: "desc",
+        },
+        {
+          updatedAt: "desc"
+        }
+      ]
     });
   } else {
     //no login
     streams = await prisma.stream.findMany({
-      include: {
+      select: {
+        id: true,
         user: true,
+        isLive: true,
+        name: true,
+        thumbnailUrl: true,
       },
       orderBy: [
         {

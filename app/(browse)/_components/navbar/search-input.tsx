@@ -19,7 +19,7 @@ export const SearchInput = () => {
 
     const url = qs.stringifyUrl(
       {
-        url: "/",
+        url: "/search",
         query: { term: value },
       },
       { skipEmptyString: true }
