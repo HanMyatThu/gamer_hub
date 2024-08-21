@@ -3,11 +3,13 @@ import { LiveKitRoom } from "@livekit/components-react";
 import { Stream, User } from "@prisma/client";
 
 import { useViewerToken } from "@/hooks/user-service";
-import { Video, VideoSkeleton } from "./video";
 import { useChatSidebar } from "@/store/usechat-sidebar";
 import { cn } from "@/lib/utils";
+import { Header } from "./header";
 import { Chat, ChatSkeleton } from "@/components/chat/chat";
 import { ChatToggle } from "@/components/chat/chat-toggle";
+import { Video, VideoSkeleton } from "./video";
+import { InfoCard } from "@/components/info";
 
 interface StreamPlayerProps {
   user: User & { Stream: Stream | null };
@@ -45,6 +47,20 @@ export const StreamPlayer = ({
       >
         <div className="space-y-4 col-span-2 lg:col-span-2 xl:col-span-2 2xl:col-span-5 lg:overflow-y-auto hidden-scrollbar pb-10">
           <Video hostName={user.username} hostIdentity={user.id} />
+          <Header
+            host={user.username}
+            hostIdentity={user.id}
+            viewerIdentity={identity}
+            imageUrl={user.imageUrl}
+            isFollowing={isFollowing}
+            name={stream.name}
+          />
+          <InfoCard
+            hostIdentity={user.id}
+            viewerIdentity={identity}
+            name={stream.name}
+            thumbnailUrl={stream.thumbnailUrl}
+          />
         </div>
         <div className={cn("col-span-1", collapsed && "hidden")}>
           <Chat
