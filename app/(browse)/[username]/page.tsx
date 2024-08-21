@@ -1,8 +1,9 @@
+import { notFound } from "next/navigation";
+
+import { StreamPlayer } from "@/components/stream/stream-player";
+import { isBlockedByUser } from "@/lib/block-service";
 import { isFollowingUser } from "@/lib/follwer-service";
 import { getUserByUserName } from "@/lib/user-service";
-import { notFound } from "next/navigation";
-import { Action } from "./_components/actions";
-import { isBlockedByUser } from "@/lib/block-service";
 
 interface UserPageProps {
   params: {
@@ -13,26 +14,19 @@ interface UserPageProps {
 const UserPage = async ({ params }: UserPageProps) => {
   const user = await getUserByUserName(params.username);
 
-  if (!user) {
+  if (!user || !user.Stream) {
     notFound();
   }
 
   const isFollowing = await isFollowingUser(user.id);
-  const isBlocking = await isBlockedByUser(user.id);
+  const isBlocked = await isBlockedByUser(user.id);
+
+  if (isBlocked) {
+    notFound();
+  }
 
   return (
-    <div>
-      User Page
-      <p>{user.username}</p>
-      <p>{user.id}</p>
-      <p>Isfollowing {isFollowing ? "true" : "false"}</p>
-      <p>isBlocking {isBlocking ? "true" : "false"}</p>
-      <Action
-        userId={user.id}
-        isFollowing={isFollowing}
-        isBlocking={isBlocking}
-      />
-    </div>
+    <StreamPlayer user={user} stream={user.Stream} isFollowing={isFollowing} />
   );
 };
 
