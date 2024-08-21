@@ -12,9 +12,11 @@ interface CreatorPageProps {
 const CreatorPage = async ({ params }: CreatorPageProps) => {
   const externalUser = await currentUser();
   const user = await getUserByUserName(params.username);
+
   if (!user || user.externalUserId !== externalUser?.id || !user.Stream) {
     throw new Error("Unauthorized!");
   }
+
   return (
     <div>
       <StreamPlayer user={user} stream={user.Stream} isFollowing={true} />
