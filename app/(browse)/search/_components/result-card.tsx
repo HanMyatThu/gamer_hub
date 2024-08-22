@@ -7,7 +7,14 @@ import { VerifiedMark } from "@/components/common/verified-mark";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface ResultCardProps {
-  data: Stream & { user: User };
+  data: {
+    id: string;
+    name: string;
+    thumbnailUrl: string | null;
+    user: User;
+    updatedAt: Date;
+    isLive: boolean;
+  };
 }
 
 export const ResultCard = ({ data }: ResultCardProps) => {
