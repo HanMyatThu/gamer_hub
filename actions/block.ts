@@ -43,16 +43,11 @@ export const onBlock = async (id: string) => {
 }
 
 export const unBlock = async (id: string) => {
-  try {
-    const unBlockedUser = await unblockUser(id);
+  const self = await getSelf();
+  const unBlockedUser = await unblockUser(id);
 
-    revalidatePath("/");
-
-    if (unBlockedUser) {
-      revalidatePath(`/${unBlockedUser.blocked.username}`)
-    }
-    return unBlockedUser;
-  } catch {
-    throw new Error("Internal Error");
-  }
+  revalidatePath(`/u/${self.username}/community`);
+  
+  return unBlockedUser;
+  
 }

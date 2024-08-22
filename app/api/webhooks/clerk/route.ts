@@ -2,6 +2,7 @@ import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
 import prisma from '@/lib/db'
+import { resetIngress } from '@/actions/ingress'
 
 export async function POST(req: Request) {
 
@@ -90,6 +91,7 @@ export async function POST(req: Request) {
 
   // user deleted 
   if (eventType === 'user.deleted') {
+    await resetIngress(payload.data.id);
     await prisma.user.delete({
       where: {
         externalUserId: payload.data.id
